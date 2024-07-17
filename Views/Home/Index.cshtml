@@ -1,0 +1,137 @@
+﻿@using Projekt_Zespolowy.Controllers
+@using Projekt_Zespolowy.ViewModels
+
+@model MainPageVM
+
+@{
+    ViewData["Title"] = "Strona główna ";
+}
+
+<div class="container">
+    <h2>Lista najnowszych ofert na stronie</h2>
+    @foreach (var item in Model.NewOffers)
+    {
+        <a class="site-link" asp-area="" asp-controller="Offers" asp-action="OfferDetails" asp-route-id="@item.OfferId">
+            <div class="offer" style="display: flex;">
+                <div class="col-8" style="flex: 1;">
+                    <h6>Przedmiot: @item.Category.Name</h6>
+                    <h5>Korepetytor: @item.OfferCreator.FirstName @item.OfferCreator.LastName</h5>
+                    @if (!item.IsOnline)
+                    {
+                        <p><strong>Lokalizacja:</strong> @item.Localization.City</p>
+                    }
+                    else
+                    {
+                        <p><strong>Lokalizacja:</strong> Zajęcia zdalne</p>
+                    }
+                    @if(item.OfferDescription.Length <= 50){
+                        <p style="height: 25px"><strong>Opis Oferty:</strong> @item.OfferDescription</p>
+                    }
+                    else{
+                        <p style="height: 25px"><strong>Opis Oferty:</strong> @item.OfferDescription.Substring(0, 50)...</p>
+                    }
+                </div>
+                <div class="col-4">
+                    <p style="text-align: right;"><strong>Cena</strong>: @item.Price [zł/h]</p>
+                    <p style="text-align:right;">
+                    @if (item.OfferCreator.Score != float.NaN && item.OfferCreator.Score > 0)
+                    {   
+                        int yellowStarCount = (int)item.OfferCreator.Score;
+                        int greyStarCount = 5 - yellowStarCount;
+                        for (int i = 0; i < yellowStarCount; i++)
+                        {
+                             <i class="fa-regular fa-star" style="color:gold;"></i>
+                        }
+                        for (int i = 0; i < greyStarCount; i++)
+                        {
+                            <i class="fa-regular fa-star" style="color:grey;"></i>
+                        }
+                    }
+                    else
+                    {
+                        <p style="text-align: right;">Brak Opinii</p>
+                    }
+                    </p>
+
+                    @if (User.Identity.IsAuthenticated)
+                    {
+                        @if(item.OfferCreator.PhoneNumber == null)
+                        {
+                            <p style="text-align: right;"><strong>Numer telefonu: </strong>--</p>
+                        }
+                        else
+                        {
+                            <p style="text-align: right;"><strong>Numer telefonu: </strong>@item.OfferCreator.PhoneNumber</p>
+                        }
+                    }
+                    else
+                    {
+                        <p style="text-align: right;"><strong>Numer Telefonu: </strong>Zaloguj się, aby zobaczyć</p>
+                    }
+                        <p style="text-align: right;">
+                        <strong>Poziom: </strong>
+                        @if (item.LevelClasses.Count > 0)
+                        {
+                            @foreach (var item2 in item.LevelClasses)
+                            {
+                                <span style="display: inline-block;">@item2.Name</span>
+                            }
+                        }
+                        else
+                        {
+                            <span style="display: inline-block;">Nieokreślony</span>
+                        }
+                    </p>
+                </div>
+            </div>
+        </a>
+    }
+</div>
+
+<div class="container" style="display:flex">
+    <div class="col-5 offer">
+        <h4>Topowi korepetytorzy:</h4>
+        @foreach (var user in Model.TopUsers)
+        {
+            <div class="row" style="padding:5px;">
+                <a class="site-link" asp-area="" asp-controller="User" asp-action="UserPanel" asp-route-OfferCreatorId="@user.Id">
+                    <i class="fa-solid fa-user" style="font-size: 25px"></i>
+                    <span>@user.FirstName @user.LastName</span>
+                    @if (user.Score != float.NaN && user.Score > 0)
+                    {
+                        int yellowStarCount = (int)user.Score;
+                        int greyStarCount = 5 - yellowStarCount;
+
+                        for (int i = 0; i < yellowStarCount; i++)
+                        {
+                            <i class="fa-regular fa-star" style="color:gold;"></i>
+                        }
+                        for (int i = 0; i < greyStarCount; i++)
+                        {
+                            <i class="fa-regular fa-star" style="color:grey;"></i>
+                        }
+                    }
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="col-5 offset-2 offer">
+        <h4>Topowe kategorie:</h4>
+        @foreach (var category in Model.TopCategories)
+        {
+            <div class="row" style="padding:5px;">
+                <a class="site-link" asp-area="" asp-controller="Home" asp-action="SearchBar" asp-route-searchString="@category.Name">
+                    <i class="fa-solid fa-block-question" style="font-size: 25px"></i>
+                    <span>@category.Name (@category.Count)</span>
+                </a>
+            </div>
+        }
+    </div>
+
+    <div class="col-4">
+
+    </div>
+</div>
+
+

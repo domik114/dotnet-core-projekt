@@ -1,0 +1,30 @@
+﻿@model List<Offer>
+
+@{
+    ViewData["Title"] = "ShowOffers";
+}
+
+<h1>Lista Twoich ofert</h1>
+
+<div>
+    <br />
+
+    <table class="table table-striped border">
+        <tr class="table-secondary">
+            <th>Nazwa</th>
+            <th>Lokalizacja</th>
+            <th>Cena</th>
+            <th></th>
+        </tr>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@Html.ActionLink(item.OfferName, "EditOffers", "Offers", new { OfferID = item.OfferId }, null)</td>
+                <td>@Html.DisplayFor(m => item.Localization.City)</td>
+                <td>@Html.DisplayFor(m => item.Price)</td>
+                <td>@Html.ActionLink("Usuń", "Delete", "Offers", new { OfferID = item.OfferId }, null)</td>
+            </tr>
+        }
+    </table>
+</div>
+

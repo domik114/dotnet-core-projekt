@@ -1,0 +1,64 @@
+﻿
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>@ViewData["Title"] - E-Korki</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css" />
+    <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/Projekt_Zespolowy.styles.css" asp-append-version="true" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-expand-sm navbar-toggleable-sm navbar-light border-bottom box-shadow mb-3" style="background-color: burlywood;">
+            <div class="container-fluid menu-color">
+                <a class="menu-button" style="color:#000000;" asp-area="" asp-controller="Home" asp-action="Index">E-korki</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target=".navbar-collapse" aria-controls="navbarSupportedContent"
+                        aria-expanded="false" aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon menu-button"></span>
+                </button>
+                <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
+                    <ul class="navbar-nav flex-grow-1">
+                        @*<li class="nav-item">
+                            <a class="menu-button" asp-area="" asp-controller="Home" asp-action="SearchBar">Wyszukiwarka</a>
+                        </li>*@
+                        <li class="nav-item">
+                            <a class="menu-button" asp-area="" asp-controller="Offers" asp-action="Add">Dodaj Ofertę</a>
+                        </li>
+                        @if (User.Identity.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="menu-button" asp-area="" asp-controller="Offers" asp-action="ShowOffers">Moje oferty</a>
+                            </li>
+                        }
+                    </ul>
+                    <form asp-action="SearchBar" method="post" class="searchForm">
+                        <div style="width:250px;">
+                            <input type="text" class="form-control" id="searchString" name="searchString" placeholder="Wpisz szukaną frazę">
+                        </div>
+                        <button type="submit" class="btn btn-primary"><i class="fa-brands fa-searchengin"></i></button>
+                    </form>
+                    <partial name="_LoginPartial" />
+                </div>
+            </div>
+        </nav>
+    </header>
+    <div class="container">
+        <main role="main" class="pb-3">
+            @RenderBody()
+        </main>
+    </div>
+
+    <footer class="border-top footer text-muted footer-banner">
+        <div class="container">
+            &copy; 2023 - E-korki
+        </div>
+    </footer>
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="~/js/site.js" asp-append-version="true"></script>
+    @await RenderSectionAsync("Scripts", required: false)
+</body>
+</html>

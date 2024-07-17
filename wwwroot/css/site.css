@@ -1,0 +1,75 @@
+html {
+    font-size: 14px;
+}
+
+@media (min-width: 768px) {
+    html {
+        font-size: 16px;
+    }
+}
+
+html {
+    position: relative;
+    min-height: 100%;
+}
+
+body {
+    margin-bottom: 60px;
+}
+
+.footer-banner {
+    background-color: burlywood;
+    color: white !important;
+}
+
+.menu-color {
+    background-color: burlywood;
+    color: white !important;
+}
+
+.menu-button {
+    color: white;
+    text-decoration: none;
+    padding: 10px;
+}
+
+    .menu-button:hover {
+        color: lightgray;
+        border: 1px solid lightgray;
+    }
+
+.form-group {
+    margin-top: 10px;
+}
+
+.offer {
+    border: 1px solid #ccc;
+    padding: 5px;
+    margin-bottom: 10px;
+    border-radius: 10px;
+}
+
+    .offer h4 {
+        margin-top: 0;
+    }
+
+    .offer p {
+        margin: 0;
+    }
+
+.site-link {
+    color: black;
+    text-decoration: none;
+}
+
+.offer-localization {
+
+}
+
+.searchForm {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
+    position: relative;
+}
